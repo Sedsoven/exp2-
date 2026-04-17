@@ -1,0 +1,20 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+type: command
+experiment_name: ci-training
+command: >
+  python train.py --output-dir ./outputs
+environment:
+  image: mcr.microsoft.com/azureml/openmpi3.1.2-ubuntu18.04:latest
+  conda:
+    dependencies:
+      - python=3.8
+      - pip:
+        - -r requirements.txt
+code: .
+outputs:
+  model:
+    type: uri_folder
+    path: ./outputs
+compute:
+  target: <COMPUTE_TARGET_NAME>
+  # replace <COMPUTE_TARGET_NAME> with your compute (e.g., azureml:cpu-cluster)
